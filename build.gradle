@@ -1,0 +1,23 @@
+
+apply plugin: 'java' 
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    testCompile group: "junit", name: "junit", version: "${junit_version}"       //junit隐含hamcrest-core包
+    
+    compile group: "log4j", name: "log4j", version: "${log4j_version}"
+}
+
+// UTF-8
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
