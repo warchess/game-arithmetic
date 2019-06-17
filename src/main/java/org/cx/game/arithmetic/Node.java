@@ -52,8 +52,8 @@ public class Node implements Comparable {
 
 	}
 
-	public LinkedList getLimit() {
-		LinkedList limit = new LinkedList();
+	public LinkedList<Node> getLimit() {
+		LinkedList<Node> limit = new LinkedList<Node>();
 		int x = _Pos.x;
 		int y = _Pos.y;
 		if(y%2==0){

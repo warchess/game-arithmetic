@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.cx.game.tools.Utility;
+import org.cx.game.arithmetic.tools.ArithmeticUtil;
 
 public class HexagonArithmetic implements IArithmetic {
 
@@ -22,8 +22,8 @@ public class HexagonArithmetic implements IArithmetic {
 		// TODO Auto-generated method stub
 		Integer ret = null;
 		
-		Integer [] p1 = Utility.integerToPoint(stand);
-		Integer [] p2 = Utility.integerToPoint(target);
+		Integer [] p1 = ArithmeticUtil.integerToPoint(stand);
+		Integer [] p2 = ArithmeticUtil.integerToPoint(target);
 		
 		if(p1[1]%2==0){
 			if(p1[0]-p2[0]==1 && p1[1]-p2[1]==1)
@@ -69,28 +69,28 @@ public class HexagonArithmetic implements IArithmetic {
 	@Override
 	public Integer getPosition(Integer stand, Integer direction) {
 		// TODO Auto-generated method stub
-		Integer [] p1 = Utility.integerToPoint(stand);
+		Integer [] p1 = ArithmeticUtil.integerToPoint(stand);
 		Integer ret = null;
 		
 		if(p1[1]%2==0){
 			switch (direction) {
 			case 10:
-				ret = Utility.pointToInteger(p1[0]-1, p1[1]-1);
+				ret = ArithmeticUtil.pointToInteger(p1[0]-1, p1[1]-1);
 				break;
 			case 2:
-				ret = Utility.pointToInteger(p1[0], p1[1]-1);
+				ret = ArithmeticUtil.pointToInteger(p1[0], p1[1]-1);
 				break;
 			case 9:
-				ret = Utility.pointToInteger(p1[0]-1, p1[1]);
+				ret = ArithmeticUtil.pointToInteger(p1[0]-1, p1[1]);
 				break;
 			case 3:
-				ret = Utility.pointToInteger(p1[0]+1, p1[1]);
+				ret = ArithmeticUtil.pointToInteger(p1[0]+1, p1[1]);
 				break;
 			case 8:
-				ret = Utility.pointToInteger(p1[0]-1, p1[1]+1);
+				ret = ArithmeticUtil.pointToInteger(p1[0]-1, p1[1]+1);
 				break;
 			case 4:
-				ret = Utility.pointToInteger(p1[0], p1[1]+1);
+				ret = ArithmeticUtil.pointToInteger(p1[0], p1[1]+1);
 				break;
 
 			default:
@@ -99,22 +99,22 @@ public class HexagonArithmetic implements IArithmetic {
 		}else{
 			switch (direction) {
 			case 10:
-				ret = Utility.pointToInteger(p1[0], p1[1]-1);
+				ret = ArithmeticUtil.pointToInteger(p1[0], p1[1]-1);
 				break;
 			case 2:
-				ret = Utility.pointToInteger(p1[0]+1, p1[1]-1);
+				ret = ArithmeticUtil.pointToInteger(p1[0]+1, p1[1]-1);
 				break;
 			case 9:
-				ret = Utility.pointToInteger(p1[0]-1, p1[1]);
+				ret = ArithmeticUtil.pointToInteger(p1[0]-1, p1[1]);
 				break;
 			case 3:
-				ret = Utility.pointToInteger(p1[0]+1, p1[1]);
+				ret = ArithmeticUtil.pointToInteger(p1[0]+1, p1[1]);
 				break;
 			case 8:
-				ret = Utility.pointToInteger(p1[0], p1[1]+1);
+				ret = ArithmeticUtil.pointToInteger(p1[0], p1[1]+1);
 				break;
 			case 4:
-				ret = Utility.pointToInteger(p1[0]+1, p1[1]+1);
+				ret = ArithmeticUtil.pointToInteger(p1[0]+1, p1[1]+1);
 				break;
 
 			default:
@@ -204,18 +204,18 @@ public class HexagonArithmetic implements IArithmetic {
 	@Override
 	public List<Integer> rectangle(Integer start, Integer stop) {
 		// TODO Auto-generated method stub
-		String [] starts = start.toString().split(Utility.Space);
+		String [] starts = start.toString().split(ArithmeticUtil.Space);
 		Integer startx = Integer.valueOf(starts[0]);
 		Integer starty = Integer.valueOf(starts[1]);
 		
-		String [] stops = stop.toString().split(Utility.Space);
+		String [] stops = stop.toString().split(ArithmeticUtil.Space);
 		Integer stopx = Integer.valueOf(stops[0]);
 		Integer stopy = Integer.valueOf(stops[1]);
 		
 		List<Integer> list = new ArrayList<Integer>();
 		for(int i=startx;i<=stopx;i++)
 			for(int j=starty;j<=stopy;j++)
-				list.add(Integer.valueOf(i+Utility.Space+j));
+				list.add(Integer.valueOf(i+ArithmeticUtil.Space+j));
 		return list;
 	}
 
@@ -224,8 +224,8 @@ public class HexagonArithmetic implements IArithmetic {
 		// TODO Auto-generated method stub
 		PathFinding pathFinding = new PathFinding(MAP,hit);
 		
-		Integer[] starts = Utility.integerToPoint(start);
-		Integer[] stops = Utility.integerToPoint(stop);
+		Integer[] starts = ArithmeticUtil.integerToPoint(start);
+		Integer[] stops = ArithmeticUtil.integerToPoint(stop);
 		Point startPos = new Point(starts[0], starts[1]);
 		Point stopPos = new Point(stops[0],stops[1]);
 		LinkedList<Node> path = pathFinding.searchPath(startPos, stopPos);

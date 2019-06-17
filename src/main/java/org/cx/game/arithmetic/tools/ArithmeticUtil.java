@@ -1,6 +1,6 @@
-package org.cx.game.tools;
+package org.cx.game.arithmetic.tools;
 
-public class Utility {
+public class ArithmeticUtil {
 
 	public static final String Space = "8008";
 	

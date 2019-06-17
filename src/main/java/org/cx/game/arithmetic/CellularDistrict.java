@@ -3,7 +3,7 @@ package org.cx.game.arithmetic;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.tools.Utility;
+import org.cx.game.arithmetic.tools.ArithmeticUtil;
 
 /** 
  * 蜂窝小区，以1为中心，顺时针编号，编号最大限定为100000。 求任意两编号之间的最短距离。 两个相邻小区的距离为1 
@@ -256,7 +256,7 @@ public class CellularDistrict {
     }
     
     public static Integer[] longToPoint(Long point){
-		String [] points = point.toString().split(Utility.Space);
+		String [] points = point.toString().split(ArithmeticUtil.Space);
 		Integer x = Integer.valueOf(points[0]);
 		Integer y = Integer.valueOf(points[1]);
 
@@ -267,7 +267,7 @@ public class CellularDistrict {
 		if(x<1 || y<1)
 			return OverPoint;
 		else
-			return Long.valueOf(x+Utility.Space+y);
+			return Long.valueOf(x+ArithmeticUtil.Space+y);
 	}
     
     private static Boolean isOver(Long point){

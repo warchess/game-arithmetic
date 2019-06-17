@@ -89,10 +89,10 @@ public class PathFinding {
 		startNode.sourcePoint = 0;
 		startNode.destiPoint = startNode.GetCost(destiNode);
 		startNode._parentnode = null;
-		openedList.add(startNode);
+		openedList.addNode(startNode);
 		while (!openedList.isEmpty()) {
 			// remove the initialized component
-			Node firstNode = (Node) openedList.removeFirst();
+			Node firstNode = openedList.removeFirst();
 			// check the equality
 			if (firstNode.equals(destiNode)) {
 				//
@@ -126,7 +126,7 @@ public class PathFinding {
 						// change the neighborNode's parent nodes
 						neighborNode._parentnode = firstNode;
 						// add to level
-						openedList.add(neighborNode);
+						openedList.addNode(neighborNode);
 					}
 				}
 			}
@@ -160,14 +160,14 @@ public class PathFinding {
 	private class OpenedList extends LinkedList<Node> {
 		private static final long serialVersionUID = 1L;
 		
-		public boolean add(Node node) {
+		public void addNode(Node node) {
 			for (int i = 0; i < size(); i++) {
 				if (node.compareTo(get(i)) <= 0) {
 					add(i, node);
+					return ;
 				}
 			}
 			addLast(node);
-			return true;
 		}
 	}
 }
