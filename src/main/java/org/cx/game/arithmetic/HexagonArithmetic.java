@@ -1,6 +1,5 @@
 package org.cx.game.arithmetic;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,12 +17,12 @@ public class HexagonArithmetic implements IArithmetic {
     public static final int Relative_RightBottom = 4;
 	
 	@Override
-	public Integer getDirection(Integer stand, Integer target) {
+	public Integer getDirection(Point stand, Point target) {
 		// TODO Auto-generated method stub
 		Integer ret = null;
 		
-		Integer [] p1 = ArithmeticUtil.integerToPoint(stand);
-		Integer [] p2 = ArithmeticUtil.integerToPoint(target);
+		Integer [] p1 = stand.toArray();
+		Integer [] p2 = target.toArray();
 		
 		if(p1[1]%2==0){
 			if(p1[0]-p2[0]==1 && p1[1]-p2[1]==1)
@@ -65,32 +64,43 @@ public class HexagonArithmetic implements IArithmetic {
 		
 		return ret;
 	}
+	
+	public Integer getDirectionOfRotate(Point stand, Point target, Integer direction) {
+		Integer tdir = getDirection(target, stand);
+		Integer rotate = ArithmeticUtil.getDirectionOfRotate(tdir, direction);
+		if(ArithmeticUtil.Diagonal == rotate)
+			return direction;
+		else if(ArithmeticUtil.Clockwise == rotate) 
+			return ArithmeticUtil.anticlockwise(direction);
+		else
+			return ArithmeticUtil.clockwise(direction);
+	}
 
 	@Override
-	public Integer getPosition(Integer stand, Integer direction) {
+	public Point getPosition(Point stand, Integer direction) {
 		// TODO Auto-generated method stub
-		Integer [] p1 = ArithmeticUtil.integerToPoint(stand);
-		Integer ret = null;
+		Integer [] p1 = stand.toArray();
+		Point ret = null;
 		
 		if(p1[1]%2==0){
 			switch (direction) {
 			case 10:
-				ret = ArithmeticUtil.pointToInteger(p1[0]-1, p1[1]-1);
+				ret = new Point(p1[0]-1, p1[1]-1);
 				break;
 			case 2:
-				ret = ArithmeticUtil.pointToInteger(p1[0], p1[1]-1);
+				ret = new Point(p1[0], p1[1]-1);
 				break;
 			case 9:
-				ret = ArithmeticUtil.pointToInteger(p1[0]-1, p1[1]);
+				ret = new Point(p1[0]-1, p1[1]);
 				break;
 			case 3:
-				ret = ArithmeticUtil.pointToInteger(p1[0]+1, p1[1]);
+				ret = new Point(p1[0]+1, p1[1]);
 				break;
 			case 8:
-				ret = ArithmeticUtil.pointToInteger(p1[0]-1, p1[1]+1);
+				ret = new Point(p1[0]-1, p1[1]+1);
 				break;
 			case 4:
-				ret = ArithmeticUtil.pointToInteger(p1[0], p1[1]+1);
+				ret = new Point(p1[0], p1[1]+1);
 				break;
 
 			default:
@@ -99,22 +109,22 @@ public class HexagonArithmetic implements IArithmetic {
 		}else{
 			switch (direction) {
 			case 10:
-				ret = ArithmeticUtil.pointToInteger(p1[0], p1[1]-1);
+				ret = new Point(p1[0], p1[1]-1);
 				break;
 			case 2:
-				ret = ArithmeticUtil.pointToInteger(p1[0]+1, p1[1]-1);
+				ret = new Point(p1[0]+1, p1[1]-1);
 				break;
 			case 9:
-				ret = ArithmeticUtil.pointToInteger(p1[0]-1, p1[1]);
+				ret = new Point(p1[0]-1, p1[1]);
 				break;
 			case 3:
-				ret = ArithmeticUtil.pointToInteger(p1[0]+1, p1[1]);
+				ret = new Point(p1[0]+1, p1[1]);
 				break;
 			case 8:
-				ret = ArithmeticUtil.pointToInteger(p1[0], p1[1]+1);
+				ret = new Point(p1[0], p1[1]+1);
 				break;
 			case 4:
-				ret = ArithmeticUtil.pointToInteger(p1[0]+1, p1[1]+1);
+				ret = new Point(p1[0]+1, p1[1]+1);
 				break;
 
 			default:
@@ -126,11 +136,11 @@ public class HexagonArithmetic implements IArithmetic {
 	}
 
 	@Override
-	public List<Integer> twoFlanks(Integer stand, Integer direction) {
+	public List<Point> twoFlanks(Point stand, Integer direction) {
 		// TODO Auto-generated method stub
-		List<Integer> list = new ArrayList<Integer>();
+		List<Point> list = new ArrayList<Point>();
 		
-		Integer position  = null;
+		Point position  = null;
 		
 		switch (direction) {
 		case 10:
@@ -190,45 +200,32 @@ public class HexagonArithmetic implements IArithmetic {
 	}
 
 	@Override
-	public List<Integer> getLine(Integer stand, Integer direction, Integer step) {
+	public List<Point> getLine(Point stand, Integer direction, Integer step) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Boolean isLine(Integer stand, Integer target) {
+	public Boolean isLine(Point stand, Point target) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Integer> rectangle(Integer start, Integer stop) {
+	public List<Point> rectangle(Point start, Point stop) {
 		// TODO Auto-generated method stub
-		String [] starts = start.toString().split(ArithmeticUtil.Space);
-		Integer startx = Integer.valueOf(starts[0]);
-		Integer starty = Integer.valueOf(starts[1]);
-		
-		String [] stops = stop.toString().split(ArithmeticUtil.Space);
-		Integer stopx = Integer.valueOf(stops[0]);
-		Integer stopy = Integer.valueOf(stops[1]);
-		
-		List<Integer> list = new ArrayList<Integer>();
-		for(int i=startx;i<=stopx;i++)
-			for(int j=starty;j<=stopy;j++)
-				list.add(Integer.valueOf(i+ArithmeticUtil.Space+j));
+		List<Point> list = new ArrayList<Point>();
+		for(int i=start.x;i<=stop.x;i++)
+			for(int j=start.y;j<=stop.y;j++)
+				list.add(new Point(i,j));
 		return list;
 	}
 
 	@Override
-	public LinkedList<Node> route(Integer start, Integer stop, int[][] MAP, int[] hit) {
+	public LinkedList<Node> route(Point start, Point stop, int[][] MAP, int[] hit) {
 		// TODO Auto-generated method stub
 		PathFinding pathFinding = new PathFinding(MAP,hit);
-		
-		Integer[] starts = ArithmeticUtil.integerToPoint(start);
-		Integer[] stops = ArithmeticUtil.integerToPoint(stop);
-		Point startPos = new Point(starts[0], starts[1]);
-		Point stopPos = new Point(stops[0],stops[1]);
-		LinkedList<Node> path = pathFinding.searchPath(startPos, stopPos);
+		LinkedList<Node> path = pathFinding.searchPath(start.toPointOfAwt(), stop.toPointOfAwt());
 		
 		return path;
 	}

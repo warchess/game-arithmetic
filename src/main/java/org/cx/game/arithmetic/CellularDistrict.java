@@ -16,14 +16,14 @@ public class CellularDistrict {
     private Point firstPoint;  
     private Point secondPoint;  
     
-    private static final Long OverPoint = 110010l;
-    private static final Integer base = 100;
+    //private static final Long OverPoint = 110010l;
+    //private static final Integer base = 100;
     
     private static Integer xBorder = 100;
     private static Integer yBorder = 100;
     
-    private static Map<Integer, Long> coordinateMap = new HashMap<Integer, Long>();
-    private static Map<Long, Integer> serialNumberMap = new HashMap<Long, Integer>();
+    private static Map<Integer, org.cx.game.arithmetic.Point> coordinateMap = new HashMap<Integer, org.cx.game.arithmetic.Point>();
+    private static Map<String, Integer> serialNumberMap = new HashMap<String, Integer>();
     
     static {
     	initCoordinateSystem(getCenterPoint(xBorder,yBorder),Math.max(xBorder, yBorder));
@@ -69,7 +69,7 @@ public class CellularDistrict {
      * @param dest
      * @return
      */
-    private Boolean _isLine(long origin, long dest) {
+    private Boolean _isLine(org.cx.game.arithmetic.Point origin, org.cx.game.arithmetic.Point dest) {
     	Integer sn1 = getSerialNumber(origin);
     	Integer sn2 = getSerialNumber(dest);
     	Point p1 = new Point(sn1);
@@ -88,13 +88,13 @@ public class CellularDistrict {
     
     //--------------------- static ---------------------  这部分主要实现 坐标系 与 数字编号 的转换
     
-    public static Integer getShortPathLength(Long origin, Long dest){
+    public static Integer getShortPathLength(org.cx.game.arithmetic.Point origin, org.cx.game.arithmetic.Point dest){
     	CellularDistrict cellularDistrict = new CellularDistrict();
     	cellularDistrict.initCellularDistrict(getMaxSerial(Math.max(xBorder, yBorder)));
 		return cellularDistrict.getShortestPathLength(getSerialNumber(origin), getSerialNumber(dest));
 	}
     
-    public static Boolean isLine(Long origin, Long dest) {
+    public static Boolean isLine(org.cx.game.arithmetic.Point origin, org.cx.game.arithmetic.Point dest) {
     	CellularDistrict cellularDistrict = new CellularDistrict();
     	return cellularDistrict._isLine(origin, dest);
     }
@@ -104,10 +104,8 @@ public class CellularDistrict {
      * @param coordinate 坐标
      * @return
      */
-    public static Integer getSerialNumber(Long coordinate){
-    	Integer [] ps = longToPoint(coordinate);
-    	Long point = pointToLong(base+ps[0], base+ps[1]);
-    	return serialNumberMap.get(point);
+    public static Integer getSerialNumber(org.cx.game.arithmetic.Point coordinate){
+    	return serialNumberMap.get(coordinate.toString());
     }
     
     /**
@@ -115,17 +113,13 @@ public class CellularDistrict {
      * @param serialNumber 数字编号
      * @return
      */
-    public static Long getCoordinate(Integer serialNumber){
-    	Long point = coordinateMap.get(serialNumber);
-    	Integer [] ps = longToPoint(point);
-    	return pointToLong(ps[0]%base, ps[1]%base);
+    public static org.cx.game.arithmetic.Point getCoordinate(Integer serialNumber){
+    	return coordinateMap.get(serialNumber);
     }
     
-    private static void addCoordinateMap(Integer serialNumber, Long point){
-    	if(!isOver(point)){
-			coordinateMap.put(serialNumber, point);
-    		serialNumberMap.put(point, serialNumber);
-		}
+    private static void addCoordinateMap(Integer serialNumber, org.cx.game.arithmetic.Point point){
+		coordinateMap.put(serialNumber, point);
+    	serialNumberMap.put(point.toString(), serialNumber);
     }
     
     /**
@@ -133,12 +127,12 @@ public class CellularDistrict {
      * @param centerPoint 坐标系中心点
      * @param circleNumber 圈数
      */
-    private static void initCoordinateSystem(Long centerPoint, Integer circleNumber){
+    private static void initCoordinateSystem(org.cx.game.arithmetic.Point centerPoint, Integer circleNumber){
     	
     	Integer n = 0;
-    	Integer [] point = longToPoint(centerPoint);
+    	Integer [] point = centerPoint.toArray();
     	
-    	Long starPoint = pointToLong(base+point[0], base+point[1]);
+    	org.cx.game.arithmetic.Point starPoint = centerPoint;
     	n += 1;
 		addCoordinateMap(n, starPoint);
     	
@@ -185,30 +179,30 @@ public class CellularDistrict {
 		}
     }
     
-    private static Long getPosition(Long stand, Integer direction) {
+    private static org.cx.game.arithmetic.Point getPosition(org.cx.game.arithmetic.Point stand, Integer direction) {
 		// TODO Auto-generated method stub
-		Integer [] p1 = longToPoint(stand);
-		Long ret = null;
+		Integer [] p1 = stand.toArray();
+		org.cx.game.arithmetic.Point ret = null;
 		
 		if(p1[1]%2==0){
 			switch (direction) {
 			case 10:
-				ret = pointToLong(p1[0]-1, p1[1]-1);
+				ret = new org.cx.game.arithmetic.Point(p1[0]-1, p1[1]-1);
 				break;
 			case 2:
-				ret = pointToLong(p1[0], p1[1]-1);
+				ret = new org.cx.game.arithmetic.Point(p1[0], p1[1]-1);
 				break;
 			case 9:
-				ret = pointToLong(p1[0]-1, p1[1]);
+				ret = new org.cx.game.arithmetic.Point(p1[0]-1, p1[1]);
 				break;
 			case 3:
-				ret = pointToLong(p1[0]+1, p1[1]);
+				ret = new org.cx.game.arithmetic.Point(p1[0]+1, p1[1]);
 				break;
 			case 8:
-				ret = pointToLong(p1[0]-1, p1[1]+1);
+				ret = new org.cx.game.arithmetic.Point(p1[0]-1, p1[1]+1);
 				break;
 			case 4:
-				ret = pointToLong(p1[0], p1[1]+1);
+				ret = new org.cx.game.arithmetic.Point(p1[0], p1[1]+1);
 				break;
 
 			default:
@@ -217,22 +211,22 @@ public class CellularDistrict {
 		}else{
 			switch (direction) {
 			case 10:
-				ret = pointToLong(p1[0], p1[1]-1);
+				ret = new org.cx.game.arithmetic.Point(p1[0], p1[1]-1);
 				break;
 			case 2:
-				ret = pointToLong(p1[0]+1, p1[1]-1);
+				ret = new org.cx.game.arithmetic.Point(p1[0]+1, p1[1]-1);
 				break;
 			case 9:
-				ret = pointToLong(p1[0]-1, p1[1]);
+				ret = new org.cx.game.arithmetic.Point(p1[0]-1, p1[1]);
 				break;
 			case 3:
-				ret = pointToLong(p1[0]+1, p1[1]);
+				ret = new org.cx.game.arithmetic.Point(p1[0]+1, p1[1]);
 				break;
 			case 8:
-				ret = pointToLong(p1[0], p1[1]+1);
+				ret = new org.cx.game.arithmetic.Point(p1[0], p1[1]+1);
 				break;
 			case 4:
-				ret = pointToLong(p1[0]+1, p1[1]+1);
+				ret = new org.cx.game.arithmetic.Point(p1[0]+1, p1[1]+1);
 				break;
 
 			default:
@@ -243,8 +237,8 @@ public class CellularDistrict {
 		return ret ;
 	}
     
-    private static Long getCenterPoint(Integer xBorder, Integer yBorder){
-    	return pointToLong(xBorder/2, yBorder/2);
+    private static org.cx.game.arithmetic.Point getCenterPoint(Integer xBorder, Integer yBorder){
+    	return new org.cx.game.arithmetic.Point(xBorder/2, yBorder/2);
     }
     
     private static Integer getMaxSerial(Integer circleNumber){
@@ -254,31 +248,6 @@ public class CellularDistrict {
 		}
     	return number;
     }
-    
-    public static Integer[] longToPoint(Long point){
-		String [] points = point.toString().split(ArithmeticUtil.Space);
-		Integer x = Integer.valueOf(points[0]);
-		Integer y = Integer.valueOf(points[1]);
-
-		return new Integer[]{x,y}; 
-	}
-    
-    public static Long pointToLong(Integer x,Integer y){
-		if(x<1 || y<1)
-			return OverPoint;
-		else
-			return Long.valueOf(x+ArithmeticUtil.Space+y);
-	}
-    
-    private static Boolean isOver(Long point){
-    	Integer [] ps = longToPoint(point);
-		if(ps[0]<base+1)
-			return true;
-		if(ps[1]<base+1)
-			return true;
-		return false;
-    }
-    
     
     //----------------------- static ----------------------  
   
@@ -388,8 +357,11 @@ public class CellularDistrict {
     	//System.out.println(serialNumberMap.size());
     	//System.out.println(coordinateMap.size());
     	
-    	System.out.println(CellularDistrict.getShortPathLength(380086l, 480087l));
-    	System.out.println(CellularDistrict.getShortPathLength(580086l, 480087l));
+    	org.cx.game.arithmetic.Point p1 = new org.cx.game.arithmetic.Point(3,6);
+    	org.cx.game.arithmetic.Point p2 = new org.cx.game.arithmetic.Point(4,7);
+    	org.cx.game.arithmetic.Point p3 = new org.cx.game.arithmetic.Point(3,6);
+    	System.out.println(CellularDistrict.getShortPathLength(p1, p2));
+    	
     	
     	//System.out.println(getShortPathLength(380086, 480087));
     	//System.out.println(getShortPathLength(580086, 480087));

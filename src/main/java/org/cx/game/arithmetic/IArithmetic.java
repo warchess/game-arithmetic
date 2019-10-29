@@ -11,7 +11,16 @@ public interface IArithmetic {
 	 * @param target 目标位置
 	 * @return 方向
 	 */
-	public Integer getDirection(Integer stand, Integer target);
+	public Integer getDirection(Point stand, Point target);
+	
+	/**
+	 * 根据撞击的位置，改变朝向
+	 * @param stand 撞击者位置
+	 * @param target 被撞击位置
+	 * @param direction 被撞击者朝向
+	 * @return 朝向
+	 */
+	public Integer getDirectionOfRotate(Point stand, Point target, Integer direction);
 	
 	/**
 	 * 根据方向查询相邻位置
@@ -19,7 +28,7 @@ public interface IArithmetic {
 	 * @param direction 方向
 	 * @return 位置坐标
 	 */
-	public Integer getPosition(Integer stand, Integer direction);
+	public Point getPosition(Point stand, Integer direction);
 	
 	/**
 	 * 两侧的位置，stand与target位置必须是相邻的
@@ -27,7 +36,7 @@ public interface IArithmetic {
 	 * @param direction 方向
 	 * @return
 	 */
-	public List<Integer> twoFlanks(Integer stand, Integer direction);
+	public List<Point> twoFlanks(Point stand, Integer direction);
 	
 	/**
 	 * 获取某个方向直线上的点
@@ -36,7 +45,7 @@ public interface IArithmetic {
 	 * @param step 长度
 	 * @return
 	 */
-	public List<Integer> getLine(Integer stand, Integer direction, Integer step);
+	public List<Point> getLine(Point stand, Integer direction, Integer step);
 	
 	/**
 	 * 判断两点是否在同一直线上
@@ -44,7 +53,7 @@ public interface IArithmetic {
 	 * @param target 目标位置
 	 * @return
 	 */
-	public Boolean isLine(Integer stand, Integer target);
+	public Boolean isLine(Point stand, Point target);
 	
 	/**
 	 * 两点之间的矩阵，包含起点和终点
@@ -52,7 +61,7 @@ public interface IArithmetic {
 	 * @param stop  右下角
 	 * @return
 	 */
-	public List<Integer> rectangle(Integer start, Integer stop);
+	public List<Point> rectangle(Point start, Point stop);
 	
 	/**
 	 * 获得两点之间的最短路线，并且start<>stop
@@ -62,5 +71,5 @@ public interface IArithmetic {
 	 * @param hit 障碍物
 	 * @return LinkedList<Node> 包含启动和终点，如果stop不可到达则返回null
 	 */
-	public LinkedList<Node> route(Integer start, Integer stop, int[][] MAP, int[] hit);
+	public LinkedList<Node> route(Point start, Point stop, int[][] MAP, int[] hit);
 }
