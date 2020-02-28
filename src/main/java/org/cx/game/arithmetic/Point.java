@@ -1,10 +1,15 @@
 package org.cx.game.arithmetic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Point {
+public class Point implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public Integer x;
 	public Integer y;
 	

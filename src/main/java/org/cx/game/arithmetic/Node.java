@@ -1,6 +1,7 @@
 package org.cx.game.arithmetic;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
@@ -9,6 +10,7 @@ import java.util.LinkedList;
  *
  */
 public class Node implements Comparable {
+	
 	public Point _Pos; // position of the node
 	public int sourcePoint;   //起点到该点的距离
 	public int destiPoint;    //该点到终点的距离

@@ -1,13 +1,18 @@
 package org.cx.game.arithmetic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.cx.game.arithmetic.tools.ArithmeticUtil;
 
-public class HexagonArithmetic implements IArithmetic {
+public class HexagonArithmetic implements IArithmetic, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static final int Relative_LeftTop = 10;
     public static final int Relative_Left = 9;
     public static final int Relative_LeftBottom = 8;
